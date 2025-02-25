@@ -33,7 +33,7 @@ function MovieCarousel({navigation}: {navigation: any}) {
   const [movieList, setMovieList] = React.useState<IMovieCategories[]>([]);
   const [cateList, setCateList] = React.useState<ICategory[]>([]);
 
-  const [cateChoose, setCateChoose] = React.useState<number>(0);
+  const [cateChoose, setCateChoose] = React.useState<string>("");
   const [movieCurrent, setMovieCurrent] = React.useState<IMovie | null>(null);
 
   React.useEffect(() => {
@@ -60,7 +60,7 @@ function MovieCarousel({navigation}: {navigation: any}) {
 
     if (cateChoose) {
       const filterList = movieInitalList.filter(movie =>
-        movie.categories.some(category => category.categoryId === cateChoose),
+        movie.categories.some(category => category.categoryCode === cateChoose),
       );
       setMovieList(filterList);
     } else {
@@ -73,7 +73,7 @@ function MovieCarousel({navigation}: {navigation: any}) {
   React.useEffect(() => {
     if (!isFocused) {
       setMovieCurrent(null);
-      setCateChoose(0);
+      setCateChoose("");
       setMovieList(movieInitalList);
     }
   }, [isFocused]);
@@ -100,9 +100,9 @@ function MovieCarousel({navigation}: {navigation: any}) {
               <TouchableOpacity
                 style={[
                   styles.button,
-                  cateChoose == cate.categoryId ? styles.buttonActive : '',
+                  cateChoose == cate.categoryCode ? styles.buttonActive : '',
                 ]}
-                onPress={() => setCateChoose(cate.categoryId)}>
+                onPress={() => setCateChoose(cate.categoryCode)}>
                 <Text style={styles.text}>{cate.categoryName}</Text>
               </TouchableOpacity>
             </View>
