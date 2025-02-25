@@ -59,7 +59,13 @@ const MovieDetailScreen = ({
         </View>
       </View>
       <View style={[styles.containerOrder, styles.boxPadding]}>
-        <TouchableOpacity style={styles.orderBtn}>
+        <TouchableOpacity style={styles.orderBtn} 
+         onPress={() =>
+          navigation.navigate('MovieTheater', {
+            movie: movie,
+          })
+        }
+        >
           <Ionicons name="ticket" size={20} color="#ffffff" />
           <Text style={styles.textOrder}> Đặt vé</Text>
         </TouchableOpacity>

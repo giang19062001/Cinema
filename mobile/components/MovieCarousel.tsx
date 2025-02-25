@@ -99,7 +99,13 @@ function MovieCarousel({navigation}: {navigation: any}) {
           {movieCurrent && movieCurrent?.movieName}
         </Text>
 
-        <TouchableOpacity style={styles.orderBtn}>
+        <TouchableOpacity
+          style={styles.orderBtn}
+          onPress={() =>
+            navigation.navigate('MovieTheater', {
+              movie: movieCurrent,
+            })
+          }>
           <Ionicons name="ticket" size={20} color="#ffffff" />
           <Text style={styles.text}> Đặt vé</Text>
         </TouchableOpacity>

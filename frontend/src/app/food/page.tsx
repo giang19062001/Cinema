@@ -24,7 +24,7 @@ export default function Home() {
       <Sidebar>
          <div className="grid grid-rows-[20px_1fr_20px] p-10 font-[family-name:var(--font-geist-sans)]">
             <main className="flex flex-col gap-8 row-start-2">
-               <p className="font-semibold text-2xl">Danh sách rạp</p>
+               <p className="font-semibold text-2xl">Danh sách thức ăn nhanh</p>
                <table className="border-collapse table-aut">
                   <thead>
                      <tr>

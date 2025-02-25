@@ -21,6 +21,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
+import MovieTheaterScreen from './screens/MovieTheater';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -76,7 +77,7 @@ const optionHeaderBack = (title: string) => (props: any) => ({
 
 // Tab Navigator
 const TabNavigatorWrapper = () => {
-  const hideTabBarScreens = ['MovieDetail', 'Food', 'User'];
+  const hideTabBarScreens = ['MovieDetail',"MovieTheater", 'Food', 'User'];
   const navigationState = useNavigationState(state => state);
 
   const getNestedRouteName = (state: any): string | null => {
@@ -158,6 +159,11 @@ const StackNavigatorWrapper = () => (
     <Stack.Screen
       name="MovieDetail"
       component={MovieDetailScreen}
+      options={optionHeaderBack("")}
+    />
+      <Stack.Screen
+      name="MovieTheater"
+      component={MovieTheaterScreen}
       options={optionHeaderBack("")}
     />
   </Stack.Navigator>

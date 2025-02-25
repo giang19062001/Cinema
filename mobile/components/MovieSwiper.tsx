@@ -32,6 +32,7 @@ const MovieSwiper = () => {
         renderItem={({item, index}) => (
           <View key={index} style={styles.movie}>
             <Image
+            
               style={styles.movieThumbnail}
               source={{
                 uri: item.movieThumbnail,

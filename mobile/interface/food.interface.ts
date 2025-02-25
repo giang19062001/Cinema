@@ -8,3 +8,14 @@ export interface IFood {
  }
  
  
+ export interface IChooseFood {
+    foodId: number;
+    foodName: string;
+    foodPrice: number;
+    foodImage: string;
+    foodDescription: string
+    foodActive: boolean;
+    quantity: number;
+ }
+ 
+ 
