@@ -4,12 +4,17 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 
 @Entity()
 export class Theater {
   @PrimaryGeneratedColumn()
   theaterId: number;
+
+  @Index({ unique: true })
+  @Column()
+  theaterCode: string;
 
   @Column()
   theaterName: string;

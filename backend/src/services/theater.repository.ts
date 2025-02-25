@@ -4,12 +4,13 @@ import { UpdateResult, DeleteResult } from 'typeorm';
 import { TheaterRepository } from '../repository/theater.repository';
 import { Theater } from '../entities/theater.entity';
 import { CreateTheaterDTO, UpdateTheaterDTO } from '../dto/theater.dto';
+import { autoIncreaseCode } from '../utils/func';
 
 @Injectable()
 export class TheaterService {
   constructor(
     @InjectRepository(TheaterRepository)
-    private readonly theaterRepository: TheaterRepository, 
+    private readonly theaterRepository: TheaterRepository,
   ) {}
 
   async findAll(): Promise<Theater[]> {
@@ -21,7 +22,17 @@ export class TheaterService {
   }
 
   async create(theater: CreateTheaterDTO): Promise<Theater> {
-    return this.theaterRepository.save(theater);
+    const lastRow = await this.theaterRepository.manager.query(
+      'SELECT theaterCode FROM theater ORDER BY theaterId DESC LIMIT 1',
+    );
+
+    //INCREASE CODE
+    let theaterCode = autoIncreaseCode(lastRow, 'theaterCode', 'THE');
+
+    return this.theaterRepository.save({
+      theaterCode: theaterCode,
+      ...theater,
+    });
   }
 
   async update(

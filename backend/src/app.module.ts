@@ -6,6 +6,8 @@ import { MovieModule } from './modules/movide.module';
 import { CategoryModule } from './modules/category.module';
 import { TheaterModule } from './modules/theater.module';
 import { FoodModule } from './modules/food.module';
+import { MovieCategoryModule } from './modules/movieCategory.module';
+import { RoomModule } from './modules/room.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -18,13 +20,15 @@ import { FoodModule } from './modules/food.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       migrations: ['src/migrations/**/*.{ts,js}'],
       synchronize: true,
-      // autoLoadEntities: true,
-      logging: true,
+      autoLoadEntities: true,
+      // logging: true,
     }),
     MovieModule,
     CategoryModule,
+    MovieCategoryModule,
+    FoodModule,
     TheaterModule,
-    FoodModule
+    RoomModule,
   ],
   controllers: [AppController],
   providers: [AppService],

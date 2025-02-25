@@ -4,6 +4,7 @@ import { CreateCategoryDTO, UpdateCategoryDTO } from '../dto/category.dto';
 import { Category } from '../entities/category.entity';
 import { UpdateResult, DeleteResult } from 'typeorm';
 import { CategoryRepository } from '../repository/category.repository';
+import { autoIncreaseCode } from '../utils/func';
 
 @Injectable()
 export class CategoryService {
@@ -21,7 +22,17 @@ export class CategoryService {
   }
 
   async create(category: CreateCategoryDTO): Promise<Category> {
-    return this.categoryRepository.save(category);
+    const lastRow = await this.categoryRepository.manager.query(
+      'SELECT categoryCode FROM category ORDER BY categoryId DESC LIMIT 1',
+    );
+
+    //INCREASE CODE
+    let categoryCode = autoIncreaseCode(lastRow, 'categoryCode', 'CAT');
+
+    return this.categoryRepository.save({
+      categoryCode: categoryCode,
+      ...category,
+    });
   }
 
   async update(

@@ -2,25 +2,25 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
-import { Movie } from './movie.entity';
 
 @Entity()
 export class Category {
   @PrimaryGeneratedColumn()
   categoryId: number;
 
+  @Index({ unique: true })
+  @Column()
+  categoryCode: string;
+
   @Column()
   categoryName: string;
 
   @Column({ default: true, nullable: true })
   categoryActive: boolean;
-
-  @ManyToMany(() => Movie, (movie) => movie.categories)
-  movies?: Movie[];
 
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   createdAt?: Date;

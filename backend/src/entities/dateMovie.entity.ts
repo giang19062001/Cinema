@@ -1,35 +1,31 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
-  Index,
 } from 'typeorm';
 
-@Entity()
-export class Food {
+@Entity('date_movie')
+export class DateMovie {
   @PrimaryGeneratedColumn()
-  foodId: number;
+  id: number;
 
-  @Index({ unique: true })
+//   @Index({ unique: true })
   @Column()
-  foodCode: string;
-
-  @Column()
-  foodName: string;
-
-  @Column({ type: 'int' })
-  foodPrice: number;
+  dateMovieCode: string;
 
   @Column()
-  foodImage: string;
+  movieCode: string;
 
   @Column()
-  foodDescription: string;
+  theaterCode: string;
+
+  @Column({ type: 'date' })
+  dateRelease: string;
 
   @Column({ default: true, nullable: true })
-  foodActive: boolean;
+  active: boolean;
 
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   createdAt?: Date;

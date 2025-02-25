@@ -29,7 +29,7 @@ export class CreateMovieDTO {
   @ValidateNested({ each: true })
   @Type(() => Number)
   @ArrayNotEmpty()
-  categoryIds: number[];
+  categoryCodes: number[];
 }
 export class UpdateMovieDTO {
   @ApiProperty()
@@ -61,5 +61,5 @@ export class UpdateMovieDTO {
   @ValidateNested({ each: true })
   @Type(() => Number)
   @ArrayNotEmpty()
-  categoryIds: number[];
+  categoryCodes: number[];
 }

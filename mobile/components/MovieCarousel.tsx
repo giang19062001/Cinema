@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as React from 'react';
 import {
   Dimensions,
-  Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,25 +14,39 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import Carousel, {ICarouselInstance} from 'react-native-reanimated-carousel';
-import {IMovie} from '../interface/movie.interface';
+import {IMovie, IMovieCategories} from '../interface/movie.interface';
 import {Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {ICategory} from '../interface/category.inteface';
+import {useIsFocused} from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 function MovieCarousel({navigation}: {navigation: any}) {
   const ref = React.useRef<ICarouselInstance>(null);
-  const [movieList, setMovieList] = React.useState<IMovie[]>([]);
-  const [isShowing, setIsShowing] = React.useState(true);
+  const isFocused = useIsFocused();
+
+  const [movieInitalList, setMovieInitialList] = React.useState<
+    IMovieCategories[]
+  >([]);
+  const [movieList, setMovieList] = React.useState<IMovieCategories[]>([]);
+  const [cateList, setCateList] = React.useState<ICategory[]>([]);
+
+  const [cateChoose, setCateChoose] = React.useState<number>(0);
   const [movieCurrent, setMovieCurrent] = React.useState<IMovie | null>(null);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data: response} = await axios.get('http://10.0.2.2:5000/Movie');
-        console.log(response);
-        setMovieList(response);
+        const {data: resMovie} = await axios.get('http://10.0.2.2:5000/Movie');
+        setMovieInitialList(resMovie);
+        setMovieList(resMovie);
+
+        const {data: resCate} = await axios.get(
+          'http://10.0.2.2:5000/Category',
+        );
+        setCateList(resCate);
       } catch (error: unknown) {
         console.error(error);
       }
@@ -41,98 +55,183 @@ function MovieCarousel({navigation}: {navigation: any}) {
     fetchData();
   }, []);
 
+  React.useEffect(() => {
+    setMovieCurrent(null);
+
+    if (cateChoose) {
+      const filterList = movieInitalList.filter(movie =>
+        movie.categories.some(category => category.categoryId === cateChoose),
+      );
+      setMovieList(filterList);
+    } else {
+      // 0
+      setMovieList(movieInitalList);
+    }
+  }, [cateChoose]);
+
+  //Reset
+  React.useEffect(() => {
+    if (!isFocused) {
+      setMovieCurrent(null);
+      setCateChoose(0);
+      setMovieList(movieInitalList);
+    }
+  }, [isFocused]);
+
   return (
     <View style={{flex: 1}}>
       <View style={styles.containerBtn}>
-        <View style={styles.boxBtn}>
-          <TouchableOpacity
-            style={[styles.button, isShowing && styles.buttonActive]}
-            onPress={() => setIsShowing(true)}>
-            <Text style={styles.text}>Đang chiếu</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, !isShowing && styles.buttonActive]}
-            onPress={() => setIsShowing(false)}>
-            <Text style={styles.text}>Sắp chiếu</Text>
-          </TouchableOpacity>
-        </View>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{flex: 1}}>
+          <View style={styles.boxBtn}>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                cateChoose == 0 ? styles.buttonActive : '',
+              ]}
+              onPress={() => setCateChoose(0)}>
+              <Text style={styles.text}>Tất cả</Text>
+            </TouchableOpacity>
+          </View>
+          {cateList.map((cate, index) => (
+            <View style={styles.boxBtn} key={index}>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  cateChoose == cate.categoryId ? styles.buttonActive : '',
+                ]}
+                onPress={() => setCateChoose(cate.categoryId)}>
+                <Text style={styles.text}>{cate.categoryName}</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </ScrollView>
       </View>
-      <View style={styles.containerCarousel}>
-        <Carousel
-          ref={ref}
-          width={width}
-          height={height / 2}
-          style={{marginTop: -40}}
-          data={movieList}
-          mode="parallax"
-          modeConfig={{
-            parallaxScrollingOffset: width * 1.65,
-            parallaxScrollingScale: 0.8,
-            parallaxAdjacentItemScale: 0.7,
-          }}
-          onProgressChange={(offsetProgress, absoluteProgress) => {
-            // setMovieCurrent(null)
-            // console.log(' absoluteProgress', absoluteProgress);
-            if (Number.isInteger(absoluteProgress)) {
-              setMovieCurrent(movieList[absoluteProgress]);
-            }
-          }}
-          renderItem={({item, index}) => {
-            return (
-              <View style={styles.itemContainer} key={index}>
-                <TouchableOpacity
-                  style={[styles.imageContainer]}
-                  onPress={() =>
-                    navigation.navigate('MovieDetail', {
-                      movie: movieCurrent,
-                    })
-                  }>
-                  <Image source={{uri: item.movieImage}} style={styles.image} />
-                </TouchableOpacity>
-              </View>
-            );
-          }}
-        />
-      </View>
-      <View style={styles.containerTitle}>
-        <Text style={styles.title}>
-          {movieCurrent && movieCurrent?.movieName}
-        </Text>
+      {movieList.length > 1 ? (
+        <>
+          <View style={styles.containerCarousel}>
+            <Carousel
+              ref={ref}
+              width={width}
+              height={height / 2}
+              style={{marginTop: -40}}
+              data={movieList}
+              mode="parallax"
+              modeConfig={{
+                parallaxScrollingOffset: width * 1.65,
+                parallaxScrollingScale: 0.8,
+                parallaxAdjacentItemScale: 0.7,
+              }}
+              onProgressChange={(offsetProgress, absoluteProgress) => {
+                setMovieCurrent(null);
+                // console.log(' absoluteProgress', absoluteProgress);
+                if (Number.isInteger(absoluteProgress)) {
+                  setMovieCurrent(movieList[absoluteProgress]);
+                }
+              }}
+              renderItem={({item, index}) => {
+                return (
+                  <View style={styles.itemContainer} key={index}>
+                    <TouchableOpacity
+                      style={[styles.imageContainer]}
+                      onPress={() =>
+                        navigation.navigate('MovieDetail', {
+                          movie: movieCurrent,
+                        })
+                      }>
+                      <Image
+                        source={{uri: item.movieImage}}
+                        style={styles.image}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                );
+              }}
+            />
+          </View>
+          <View style={styles.containerTitle}>
+            <Text style={styles.title}>
+              {movieCurrent ? movieCurrent?.movieName : ''}
+            </Text>
 
-        <TouchableOpacity
-          style={styles.orderBtn}
-          onPress={() =>
-            navigation.navigate('MovieTheater', {
-              movie: movieCurrent,
-            })
-          }>
-          <Ionicons name="ticket" size={20} color="#ffffff" />
-          <Text style={styles.text}> Đặt vé</Text>
-        </TouchableOpacity>
-      </View>
+            <TouchableOpacity
+              style={styles.orderBtn}
+              onPress={() =>
+                navigation.navigate('MovieTheater', {
+                  movie: movieCurrent,
+                })
+              }>
+              <Ionicons name="ticket" size={20} color="#ffffff" />
+              <Text style={styles.text}> Đặt vé</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      ) : movieList.length == 1 ? (
+        <>
+          <View style={styles.containerCarousel}>
+            <View style={styles.itemContainer}>
+              <TouchableOpacity
+                style={[styles.imageContainerEvent]}
+                onPress={() =>
+                  navigation.navigate('MovieDetail', {
+                    movie: movieCurrent,
+                  })
+                }>
+                <Image
+                  source={{uri: movieList[0].movieImage}}
+                  style={styles.image}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.containerTitle}>
+            <Text style={styles.title}>
+              {movieList[0] ? movieList[0]?.movieName : ''}
+            </Text>
+
+            <TouchableOpacity
+              style={styles.orderBtn}
+              onPress={() =>
+                navigation.navigate('MovieTheater', {
+                  movie: movieList[0],
+                })
+              }>
+              <Ionicons name="ticket" size={20} color="#ffffff" />
+              <Text style={styles.text}> Đặt vé</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   //filter
-  containerBtn: {alignItems: 'center', marginTop: 15, height: '10%'},
+  containerBtn: {
+    alignItems: 'center',
+    marginTop: 15,
+    height: '10%',
+    paddingHorizontal: 15,
+  },
   boxBtn: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: '#4b4b4b90',
-    width: width * 0.8,
-    borderRadius: 5,
-    padding: 5,
+    width: 100,
+    height: 100,
+    marginRight: 5,
   },
   buttonActive: {
-    backgroundColor: '#6b6b6bba',
+    backgroundColor: '#3f3f3f90',
+    borderWidth: 1,
+    borderColor: '#77777785',
   },
   button: {
+    backgroundColor: '#838282b9',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: 10,
     cursor: 'pointer',
-    width: '50%',
+    width: '100%',
     borderRadius: 5,
   },
   text: {
@@ -155,6 +254,10 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: width * 0.8,
     overflow: 'scroll',
+    borderRadius: 10,
+  },
+  imageContainerEvent: {
+    width: width * 0.625,
     borderRadius: 10,
   },
   image: {

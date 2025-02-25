@@ -4,6 +4,7 @@ import { UpdateResult, DeleteResult } from 'typeorm';
 import { FoodRepository } from '../repository/food.repository';
 import { Food } from '../entities/food.entity';
 import { CreateFoodDTO, UpdateFoodDTO } from '../dto/food.dto';
+import { autoIncreaseCode } from '../utils/func';
 
 @Injectable()
 export class FoodService {
@@ -21,7 +22,17 @@ export class FoodService {
   }
 
   async create(food: CreateFoodDTO): Promise<Food> {
-    return this.foodRepository.save(food);
+    const lastRow = await this.foodRepository.manager.query(
+      'SELECT foodCode FROM food ORDER BY foodId DESC LIMIT 1',
+    );
+
+    //INCREASE CODE
+    let theaterCode = autoIncreaseCode(lastRow, 'foodCode', 'FOD');
+
+    return this.foodRepository.save({
+      foodCode: theaterCode,
+      ...food,
+    });
   }
 
   async update(foodId: number, food: UpdateFoodDTO): Promise<UpdateResult> {

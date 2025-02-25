@@ -17,7 +17,7 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
                {/* <button type="button" className="text-3xl " onClick={() => setAsideOpen(!asideOpen)}>
                   <img   src={"/static/images/menu.png"} alt="" className="w-8"/>
                </button> */}
-                  {/* <img src={"https://static.vecteezy.com/system/resources/previews/005/188/413/non_2x/cinema-logo-template-isolated-on-white-background-vector.jpg"}  className="w-18 h-16"/> */}
+               {/* <img src={"https://static.vecteezy.com/system/resources/previews/005/188/413/non_2x/cinema-logo-template-isolated-on-white-background-vector.jpg"}  className="w-18 h-16"/> */}
                {/* <div className="text-white text-[#72BE43] font-bold text-xl">Logo</div> */}
             </div>
 
@@ -51,36 +51,41 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
          </header>
 
          <div className="flex">
-            <aside className="flex w-72 flex-col space-y-2  bg-[#1D232C] text-white font-semibold p-2" style={{ height: "100vh", display: asideOpen ? "block" : "none", transition:"2s" }}>
-               <Link  href="/" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
+            <aside className="flex w-72 flex-col space-y-2  bg-[#1D232C] text-white font-semibold p-2" style={{ height: "100vh", display: asideOpen ? "block" : "none", transition: "2s" }}>
+               <Link href="/" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
                   <span className="text-2xl">
                      <i className="bx bx-home"></i>
                   </span>
                   <span>Dashboard</span>
                </Link>
 
-               <Link  href="/movie" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
+               <Link href="/movie" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
                   <span className="text-2xl">
                      <i className="bx bx-cart"></i>
                   </span>
                   <span>Danh sách phim</span>
                </Link>
 
-               <Link  href="/theater" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
+               <Link href="/category" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
+                  <span className="text-2xl">
+                     <i className="bx bx-cart"></i>
+                  </span>
+                  <span>Danh sách thể loại phim</span>
+               </Link>
+               <Link href="/theater" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
                   <span className="text-2xl">
                      <i className="bx bx-shopping-bag"></i>
                   </span>
                   <span>Danh sách rạp</span>
                </Link>
-
-               <Link  href="/food" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
+               <Link href="/food" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
                   <span className="text-2xl">
                      <i className="bx bx-heart"></i>
                   </span>
                   <span>Danh sách thực phẩm</span>
                </Link>
 
-               <Link  href="#" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
+               <Link href="#" className="flex items-center space-x-1 rounded-md px-2 py-3  hover:bg-[#72BE43] ">
                   <span className="text-2xl">
                      <i className="bx bx-user"></i>
                   </span>

@@ -4,15 +4,17 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
+  Index,
 } from 'typeorm';
-import { Category } from './category.entity';
 
 @Entity()
 export class Movie {
   @PrimaryGeneratedColumn()
   movieId: number;
+
+  @Index({ unique: true })
+  @Column()
+  movieCode: string;
 
   @Column()
   movieName: string;
@@ -37,20 +39,6 @@ export class Movie {
 
   @Column({ default: true, nullable: true })
   movieActive: boolean;
-
-  @ManyToMany(() => Category, { cascade: true, nullable: false })
-  @JoinTable({
-    name: 'movie_category',
-    joinColumn: {
-      name: 'movieId',
-      referencedColumnName: 'movieId',
-    },
-    inverseJoinColumn: {
-      name: 'categoryId',
-      referencedColumnName: 'categoryId',
-    },
-  })
-  categories?: Category[];
 
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   createdAt?: Date;

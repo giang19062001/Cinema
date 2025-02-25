@@ -1,0 +1,111 @@
+[
+    {
+      "movieId": 3,
+      "movieName": "KANG MAK: TÌNH NGƯỜI DUYÊN MA: TÁI HỢP",
+      "movieDescription": "Remake từ bộ phim hài – kinh dị ảnh nổi tiếng của Thái Lan là Pee Mak – Tình Người Duyên Ma. Kang Mak kể lại hành trình trở về nhà từ chiến trường của anh lính tên Makmur. Tuy nhiên, Makmur phát hiện người vợ Sari của anh đã chết và trở thành một hồn ma.",
+      "movieTrailer": "https://youtu.be/5BiWRqBXCrY",
+      "movieImage": "https://bhdstar.vn/wp-content/uploads/2024/12/referenceSchemeHeadOfficeallowPlaceHoldertrueheight700ldapp-28.jpg",
+      "movieThumbnail": "https://bhdstar.vn/wp-content/uploads/2024/12/referenceSchemeHeadOfficeallowPlaceHoldertrueheight1069ldapp-21.jpg",
+      "movieDuration": 120,
+      "movieStartDate": "2025-01-23",
+      "movieActive": true,
+      "createdAt": "2025-01-23T06:56:58.967Z",
+      "updatedAt": "2025-01-23T06:56:58.967Z",
+      "categories": [
+        {
+          "categoryId": 1,
+          "categoryName": "Kinh dị",
+          "categoryActive": true,
+          "createdAt": "2025-01-22T09:34:22.382Z",
+          "updatedAt": "2025-01-22T09:34:22.382Z"
+        },
+        {
+          "categoryId": 2,
+          "categoryName": "Hài hước",
+          "categoryActive": true,
+          "createdAt": "2025-01-22T09:34:30.749Z",
+          "updatedAt": "2025-01-22T09:34:30.749Z"
+        }
+      ]
+    },
+    {
+      "movieId": 4,
+      "movieName": "404 RUN RUN: CHẠY NGAY ĐI",
+      "movieDescription": "Nakrob, một kẻ lừa đảo bất động sản trẻ tuổi, phát hiện ra một khách sạn trên sườn đồi bị bỏ hoang gần bãi biển. Nhìn thấy cơ hội, anh ta quyết định biến nó thành một vụ lừa đảo khách sạn sang trọng.",
+      "movieTrailer": "https://youtu.be/jS6TZkBB0lY",
+      "movieImage": "https://bhdstar.vn/wp-content/uploads/2024/12/referenceSchemeHeadOfficeallowPlaceHoldertrueheight700ldapp-24.jpg",
+      "movieThumbnail": "https://bhdstar.vn/wp-content/uploads/2024/12/referenceSchemeHeadOfficeallowPlaceHoldertrueheight1069ldapp-14.jpg",
+      "movieDuration": 120,
+      "movieStartDate": "2025-01-23",
+      "movieActive": true,
+      "createdAt": "2025-01-23T06:58:17.729Z",
+      "updatedAt": "2025-01-23T07:02:00.801Z",
+      "categories": [
+        {
+          "categoryId": 2,
+          "categoryName": "Hài hước",
+          "categoryActive": true,
+          "createdAt": "2025-01-22T09:34:30.749Z",
+          "updatedAt": "2025-01-22T09:34:30.749Z"
+        },
+        {
+          "categoryId": 3,
+          "categoryName": "Hành động",
+          "categoryActive": true,
+          "createdAt": "2025-01-22T09:34:39.372Z",
+          "updatedAt": "2025-01-22T09:34:39.372Z"
+        }
+      ]
+    },
+    {
+      "movieId": 5,
+      "movieName": "WOODWALKERS: NGƯỜI HÓA THÚ",
+      "movieDescription": "Carag, một chú báo sư tử có khả năng biến hình được nuôi trong tự nhiên gia nhập Clearwater High – ngôi trường dành cho Woodwalker. Cùng với những người bạn Holly (sóc) và Brandon (bò rừng), anh khám phá những bí ẩn và nguy hiểm của thế giới Woodwalker.",
+      "movieTrailer": "https://youtu.be/Z_epe-emxkI",
+      "movieImage": "https://bhdstar.vn/wp-content/uploads/2025/01/referenceSchemeHeadOfficeallowPlaceHoldertrueheight700ldapp-4.jpg",
+      "movieThumbnail": "https://bhdstar.vn/wp-content/uploads/2025/01/referenceSchemeHeadOfficeallowPlaceHoldertrueheight1069ldapp-4.jpg",
+      "movieDuration": 120,
+      "movieStartDate": "2025-01-23",
+      "movieActive": true,
+      "createdAt": "2025-01-23T06:59:00.927Z",
+      "updatedAt": "2025-01-23T06:59:00.927Z",
+      "categories": [
+        {
+          "categoryId": 2,
+          "categoryName": "Hài hước",
+          "categoryActive": true,
+          "createdAt": "2025-01-22T09:34:30.749Z",
+          "updatedAt": "2025-01-22T09:34:30.749Z"
+        },
+        {
+          "categoryId": 3,
+          "categoryName": "Hành động",
+          "categoryActive": true,
+          "createdAt": "2025-01-22T09:34:39.372Z",
+          "updatedAt": "2025-01-22T09:34:39.372Z"
+        }
+      ]
+    },
+    {
+      "movieId": 6,
+      "movieName": "NHÀ GIA TIÊN",
+      "movieDescription": "Tại sao chúng ta phải cùng nhau gìn giữ căn Nhà Gia Tiên? Vì sao những thế hệ con cháu luôn mất kết nối với ông bà của mình? Con người khi chết sẽ đi về đâu? Tại sao mỗi năm chúng ta phải làm đám giỗ cho người đã khuất?",
+      "movieTrailer": "https://youtu.be/aR2lnpCLqUk",
+      "movieImage": "https://www.bhdstar.vn/wp-content/uploads/2025/02/referenceSchemeHeadOfficeallowPlaceHoldertrueheight700ldapp-15.jpg",
+      "movieThumbnail": "https://www.bhdstar.vn/wp-content/uploads/2025/02/referenceSchemeHeadOfficeallowPlaceHoldertrueheight1069ldapp-7.jpg",
+      "movieDuration": 117,
+      "movieStartDate": "2025-02-25",
+      "movieActive": true,
+      "createdAt": "2025-02-25T02:09:01.131Z",
+      "updatedAt": "2025-02-25T02:09:01.131Z",
+      "categories": [
+        {
+          "categoryId": 4,
+          "categoryName": "Tình cảm",
+          "categoryActive": true,
+          "createdAt": "2025-02-25T02:07:20.099Z",
+          "updatedAt": "2025-02-25T02:07:20.099Z"
+        }
+      ]
+    }
+  ]

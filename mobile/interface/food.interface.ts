@@ -1,5 +1,6 @@
 export interface IFood {
     foodId: number;
+    foodCode: string;
     foodName: string;
     foodPrice: number;
     foodImage: string;
@@ -10,6 +11,7 @@ export interface IFood {
  
  export interface IChooseFood {
     foodId: number;
+    foodCode: string;
     foodName: string;
     foodPrice: number;
     foodImage: string;

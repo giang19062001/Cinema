@@ -70,7 +70,7 @@ const FoodScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Chọn đồ ăn nhanh</Text>
-      <ScrollView>
+      <ScrollView style={styles.scrollList}>
         {foodList.map((food, index) => {
           let quantity =
             foodChooseList.find(fod => fod.foodId === food.foodId)?.quantity ||
@@ -153,13 +153,17 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 15,
   },
+  scrollList:{
+    marginBottom:120
+  },
   row: {
     display: 'flex',
     flexDirection: 'row',
     gap: 15,
     marginBottom: 20,
     backgroundColor: '#353535b8',
-    padding: 15,
+    padding: 20,
+    borderRadius: 10,
   },
   image: {
     width: 80,

@@ -32,9 +32,9 @@ export class MovieController {
     return this.movieService.create(movie);
   }
 
-  @Put(':id')
-  update(@Param('id') id: number, @Body() movie: UpdateMovieDTO) {
-    return this.movieService.update(id, movie);
+  @Put(':code')
+  update(@Param('code') code: string, @Body() movie: UpdateMovieDTO) {
+    return this.movieService.update(code, movie);
   }
 
   @Delete(':id')

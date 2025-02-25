@@ -8,28 +8,22 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Food {
+export class Room {
   @PrimaryGeneratedColumn()
-  foodId: number;
+  roomId: number;
 
   @Index({ unique: true })
   @Column()
-  foodCode: string;
+  roomCode: string;
 
   @Column()
-  foodName: string;
-
-  @Column({ type: 'int' })
-  foodPrice: number;
+  theaterCode: string;
 
   @Column()
-  foodImage: string;
-
-  @Column()
-  foodDescription: string;
+  roomName: string;
 
   @Column({ default: true, nullable: true })
-  foodActive: boolean;
+  roomActive: boolean;
 
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   createdAt?: Date;
