@@ -27,7 +27,7 @@ export class CategoryService {
     );
 
     //INCREASE CODE
-    let categoryCode = autoIncreaseCode(lastRow, 'categoryCode', 'CAT');
+    const categoryCode = autoIncreaseCode(lastRow, 'categoryCode', 'CAT');
 
     return this.categoryRepository.save({
       categoryCode: categoryCode,

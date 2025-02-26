@@ -6,20 +6,23 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('time_movie')
-export class TimeMovie {
+@Entity('show_date')
+export class ShowDate {
   @PrimaryGeneratedColumn()
-  id: number;
+  showDateId: number;
+
+  //   @Index({ unique: true })
+  @Column()
+  showDateCode: string;
 
   @Column()
-  dateMovieCode: string;
+  movieCode: string;
 
   @Column()
-  roomCode: string;
+  theaterCode: string;
 
-  @Column({ type: 'varchar', length: 5 }) // Stores "HH:mm"
-  timeRelease: string;
-
+  @Column({ type: 'date' })
+  dateRelease: string;
 
   @Column({ default: true, nullable: true })
   active: boolean;

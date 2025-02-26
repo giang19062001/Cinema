@@ -27,7 +27,7 @@ export class RoomService {
     );
 
     //INCREASE CODE
-    let roomCode = autoIncreaseCode(lastRow, 'roomCode', 'ROM');
+    const roomCode = autoIncreaseCode(lastRow, 'roomCode', 'ROM');
 
     return this.roomRepository.save({
       roomCode: roomCode,

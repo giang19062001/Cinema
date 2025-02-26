@@ -1,31 +1,35 @@
 import {
-  Column,
-  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 
-@Entity('date_movie')
-export class DateMovie {
+@Entity()
+export class Seat {
   @PrimaryGeneratedColumn()
-  id: number;
+  seatId: number;
 
-//   @Index({ unique: true })
+  @Index({ unique: true })
   @Column()
-  dateMovieCode: string;
-
-  @Column()
-  movieCode: string;
+  seatCode: string;
 
   @Column()
-  theaterCode: string;
+  roomCode: string;
 
-  @Column({ type: 'date' })
-  dateRelease: string;
+  @Column()
+  seatCharacter: string;
+
+  @Column()
+  seatName: string;
+
+  @Column()
+  seatStatus: string; // FREE, BOOKING, BOOKED
 
   @Column({ default: true, nullable: true })
-  active: boolean;
+  seatActive: boolean;
 
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   createdAt?: Date;

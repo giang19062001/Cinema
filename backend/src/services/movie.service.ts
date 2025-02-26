@@ -36,8 +36,6 @@ export class MovieService {
       ])
       .getRawMany();
 
-    console.log('rowMovies', rowMovies);
-
     // GROUP CATEGORY TO ARRAY CHILD OF MOVIE
     const movies = rowMovies.reduce((acc, movie) => {
       const existingMovie = acc.find((m) => m.movieCode === movie.movieCode);
@@ -47,6 +45,7 @@ export class MovieService {
           categoryName: movie.categoryName,
         });
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { categoryCode, categoryName, ...restMovie } = movie;
         acc.push({
           ...restMovie,
@@ -88,7 +87,7 @@ export class MovieService {
       );
 
       //INCREASE CODE
-      let movieCode = autoIncreaseCode(lastRow, 'movieCode', 'MOV');
+      const movieCode = autoIncreaseCode(lastRow, 'movieCode', 'MOV');
 
       const movie = queryRunner.manager.save(Movie, {
         movieCode: movieCode,
@@ -118,7 +117,7 @@ export class MovieService {
     }
   }
 
-  async update(movieCode: string, movieDto: UpdateMovieDTO): Promise<Boolean> {
+  async update(movieCode: string, movieDto: UpdateMovieDTO): Promise<boolean> {
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
@@ -160,7 +159,7 @@ export class MovieService {
         }
       }
       // UPPDATE MOVIE
-      await queryRunner.manager.update(Movie, {movieCode: movieCode}, movie);
+      await queryRunner.manager.update(Movie, { movieCode: movieCode }, movie);
       //COMMMIT
       await queryRunner.commitTransaction();
 

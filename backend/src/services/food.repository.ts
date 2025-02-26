@@ -27,10 +27,10 @@ export class FoodService {
     );
 
     //INCREASE CODE
-    let theaterCode = autoIncreaseCode(lastRow, 'foodCode', 'FOD');
+    const foodCode = autoIncreaseCode(lastRow, 'foodCode', 'FOD');
 
     return this.foodRepository.save({
-      foodCode: theaterCode,
+      foodCode: foodCode,
       ...food,
     });
   }
