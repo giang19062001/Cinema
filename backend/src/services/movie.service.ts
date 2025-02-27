@@ -34,6 +34,7 @@ export class MovieService {
         'c.categoryCode as categoryCode',
         'c.categoryName as categoryName',
       ])
+      .orderBy('m.movieId', 'DESC')
       .getRawMany();
 
     // GROUP CATEGORY TO ARRAY CHILD OF MOVIE

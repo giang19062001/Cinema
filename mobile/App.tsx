@@ -14,6 +14,7 @@ import HomeScreen from './screens/Home';
 import UserScreen from './screens/User';
 import MovieDetailScreen from './screens/MovieDetail';
 import FoodScreen from './screens/Food';
+import {Provider} from 'react-redux';
 
 import {
   createDrawerNavigator,
@@ -22,6 +23,8 @@ import {
 } from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import MovieTheaterScreen from './screens/MovieTheater';
+import store from './store/store';
+import LoginScreen from './screens/Login';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -77,7 +80,7 @@ const optionHeaderBack = (title: string) => (props: any) => ({
 
 // Tab Navigator
 const TabNavigatorWrapper = () => {
-  const hideTabBarScreens = ['MovieDetail',"MovieTheater", 'Food', 'User'];
+  const hideTabBarScreens = ['MovieDetail', 'MovieTheater', 'Food', 'User'];
   const navigationState = useNavigationState(state => state);
 
   const getNestedRouteName = (state: any): string | null => {
@@ -137,7 +140,6 @@ const TabNavigatorWrapper = () => {
         name="Food"
         component={FoodScreen}
         options={optionHeaderBack('Thực phẩm')}
-        
       />
       <Tab.Screen
         name="User"
@@ -159,12 +161,17 @@ const StackNavigatorWrapper = () => (
     <Stack.Screen
       name="MovieDetail"
       component={MovieDetailScreen}
-      options={optionHeaderBack("")}
+      options={optionHeaderBack('')}
     />
-      <Stack.Screen
+    <Stack.Screen
       name="MovieTheater"
       component={MovieTheaterScreen}
-      options={optionHeaderBack("")}
+      options={optionHeaderBack('')}
+    />
+     <Stack.Screen
+      name="Login"
+      component={LoginScreen}
+      options={optionHeaderBack('')}
     />
   </Stack.Navigator>
 );
@@ -236,34 +243,36 @@ function App() {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
+    <Provider store={store}>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
 
-      <NavigationContainer>
-        <Drawer.Navigator
-          drawerContent={props => <DrawerNavigatorWrapper {...props} />}
-          screenOptions={{
-            drawerStyle: {
-              backgroundColor: '#333',
-              width: 250,
-              borderEndEndRadius: 0,
-              borderTopEndRadius: 0,
-            },
-            drawerLabelStyle: {
-              color: '#fff',
-            },
-          }}>
-          <Drawer.Screen
-            name="Drawer"
-            component={StackNavigatorWrapper}
-            options={{headerShown: false}}
-          />
-        </Drawer.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+        <NavigationContainer>
+          <Drawer.Navigator
+            drawerContent={props => <DrawerNavigatorWrapper {...props} />}
+            screenOptions={{
+              drawerStyle: {
+                backgroundColor: '#333',
+                width: 250,
+                borderEndEndRadius: 0,
+                borderTopEndRadius: 0,
+              },
+              drawerLabelStyle: {
+                color: '#fff',
+              },
+            }}>
+            <Drawer.Screen
+              name="Drawer"
+              component={StackNavigatorWrapper}
+              options={{headerShown: false}}
+            />
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
+    </Provider>
   );
 }
 

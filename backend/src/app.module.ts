@@ -8,6 +8,7 @@ import { TheaterModule } from './modules/theater.module';
 import { FoodModule } from './modules/food.module';
 import { MovieCategoryModule } from './modules/movieCategory.module';
 import { RoomModule } from './modules/room.module';
+import { ShowDateModule } from './modules/showDate.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -29,6 +30,7 @@ import { RoomModule } from './modules/room.module';
     FoodModule,
     TheaterModule,
     RoomModule,
+    ShowDateModule,
   ],
   controllers: [AppController],
   providers: [AppService],

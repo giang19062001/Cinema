@@ -14,40 +14,18 @@ import Accordion from 'react-native-collapsible/Accordion';
 import {Image} from 'react-native';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import moment from 'moment';
-import {ITheater} from '../interface/theater.inteface';
 import axios from 'axios';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {IShowDateTime} from '../interface/showDateTime';
+import {RootState} from '../store/store';
+import {useSelector} from 'react-redux';
 
-const times = [
-  {
-    dateId: 1,
-    date: '14:05',
-  },
-  {
-    dateId: 2,
-    date: '14:05',
-  },
-  {
-    dateId: 3,
-    date: '14:05',
-  },
-  {
-    dateId: 4,
-    date: '14:05',
-  },
-  {
-    dateId: 5,
-    date: '14:05',
-  },
-  {
-    dateId: 6,
-    date: '14:05',
-  },
-  {
-    dateId: 7,
-    date: '14:05',
-  },
-];
+// const [dateList, setDateList] = useState([
+//   moment().format('YYYY-MM-DD'),
+//   moment().add(1, 'days').format('YYYY-MM-DD'),
+// ]);
+// const [dateChoose, setDateChoose] = useState(moment().format('YYYY-MM-DD'));
+
 const MovieTheaterScreen = ({
   route,
   navigation,
@@ -56,12 +34,22 @@ const MovieTheaterScreen = ({
   navigation: any;
 }) => {
   const {movie} = route.params as {movie: IMovie};
-  const [theaterList, setTheaterList] = useState<ITheater[]>([]);
+  const [theaterList, setTheaterList] = useState<IShowDateTime[]>([]);
+
+  //AUTH
+  const user = useSelector((state: RootState) => state.auth.user);
+  // const dispatch = useDispatch<AppDispatch>();
+
+  const [dateList, setDateList] = useState(['2025-02-26', '2025-02-27']);
+  const [dateChoose, setDateChoose] = useState('2025-02-26');
+  const [activeSections, setActiveSections] = useState<number[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data: response} = await axios.get(
-          'http://10.0.2.2:5000/Theater',
+        const {data: response} = await axios.post(
+          'http://10.0.2.2:5000/ShowDate/dateByMovie',
+          {movieCode: movie.movieCode, date: dateChoose},
         );
         console.log(response);
         setTheaterList(response);
@@ -71,18 +59,17 @@ const MovieTheaterScreen = ({
     };
 
     fetchData();
-  }, []);
-  const [dateList, setDateList] = useState([
-    moment().format('YYYY-MM-DD'),
-    moment().add(1, 'days').format('YYYY-MM-DD'),
-  ]);
-  const [timeList, setTimeList] = useState(times);
+  }, [dateChoose]);
 
-  const [dateChoose, setDateChoose] = useState(moment().format('YYYY-MM-DD'));
-  const [activeSections, setActiveSections] = useState<number[]>([]);
+  const gotoOrderOrLogin = () => {
+    if (user) {
+    } else {
+      navigation.navigate('Login');
+    }
+  };
 
   const _renderHeader = (
-    section: ITheater,
+    section: IShowDateTime,
     index: number,
     isActive: boolean,
   ) => {
@@ -98,31 +85,24 @@ const MovieTheaterScreen = ({
     );
   };
 
-  const _renderContent = (section: ITheater) => {
+  const _renderContent = (section: IShowDateTime) => {
     return (
-      <View style={{flex: 1}}>
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={{flex: 1}}>
-          {timeList.map((time, index) => (
-            <View style={styles.boxTime} key={index}>
-              <TouchableOpacity
-                style={[
-                  styles.btnTime,
-                  // cateChoose == cate.categoryId ? styles.buttonActive : '',
-                ]}
-                // onPress={() => setCateChoose(cate.categoryId)}
-              >
-                <Text style={styles.textTime}>{time.date}</Text>
-              </TouchableOpacity>
-            </View>
-          ))}
-        </ScrollView>
+      <View style={styles.listTime}>
+        {section.timeList.map((time, index) => (
+          <TouchableOpacity
+            style={styles.btnTime}
+            key={index}
+            onPress={() => gotoOrderOrLogin()}>
+            <Text style={styles.textTime}>
+              {moment(time.timeRelease, 'HH:mm:ss').format('HH:mm')}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
     );
   };
 
+  console.log('user', user);
   return (
     <View style={styles.container}>
       <Image
@@ -264,18 +244,19 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: 'white',
   },
-  boxTime: {
-    width: 100,
-    height: 100,
-    marginRight: 5,
-    flex: 1,
+  listTime: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    paddingBottom: 10,
   },
   btnTime: {
-    backgroundColor: '#838282b9',
+    backgroundColor: '#3f3f3f90',
     alignItems: 'center',
-    paddingVertical: 10,
+    height: 40,
+    padding: 0,
     cursor: 'pointer',
-    width: '100%',
+    width: '20%',
     borderRadius: 5,
   },
   textTime: {

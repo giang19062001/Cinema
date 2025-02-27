@@ -33,9 +33,9 @@ function MovieCarousel({navigation}: {navigation: any}) {
   const [movieList, setMovieList] = React.useState<IMovieCategories[]>([]);
   const [cateList, setCateList] = React.useState<ICategory[]>([]);
 
-  const [cateChoose, setCateChoose] = React.useState<string>("");
+  const [cateChoose, setCateChoose] = React.useState<string>('');
   const [movieCurrent, setMovieCurrent] = React.useState<IMovie | null>(null);
-
+  const progress = useSharedValue(0);
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -73,37 +73,34 @@ function MovieCarousel({navigation}: {navigation: any}) {
   React.useEffect(() => {
     if (!isFocused) {
       setMovieCurrent(null);
-      setCateChoose("");
+      setCateChoose('');
       setMovieList(movieInitalList);
     }
   }, [isFocused]);
 
   return (
     <View style={{flex: 1}}>
-      <View style={styles.containerBtn}>
-        <ScrollView
+      <View style={styles.containerCate}>
+      <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           style={{flex: 1}}>
-          <View style={styles.boxBtn}>
+          <View style={styles.boxCate}>
             <TouchableOpacity
-              style={[
-                styles.button,
-                cateChoose == 0 ? styles.buttonActive : '',
-              ]}
-              onPress={() => setCateChoose(0)}>
-              <Text style={styles.text}>Tất cả</Text>
+              style={[styles.btnCate, cateChoose == '' ? styles.btnActive : '']}
+              onPress={() => setCateChoose('')}>
+              <Text style={styles.textCate}>Tất cả</Text>
             </TouchableOpacity>
           </View>
           {cateList.map((cate, index) => (
-            <View style={styles.boxBtn} key={index}>
+            <View style={styles.boxCate} key={index}>
               <TouchableOpacity
                 style={[
-                  styles.button,
-                  cateChoose == cate.categoryCode ? styles.buttonActive : '',
+                  styles.btnCate,
+                  cateChoose == cate.categoryCode ? styles.btnActive : '',
                 ]}
                 onPress={() => setCateChoose(cate.categoryCode)}>
-                <Text style={styles.text}>{cate.categoryName}</Text>
+                <Text style={styles.textCate}>{cate.categoryName}</Text>
               </TouchableOpacity>
             </View>
           ))}
@@ -125,8 +122,7 @@ function MovieCarousel({navigation}: {navigation: any}) {
                 parallaxAdjacentItemScale: 0.7,
               }}
               onProgressChange={(offsetProgress, absoluteProgress) => {
-                setMovieCurrent(null);
-                // console.log(' absoluteProgress', absoluteProgress);
+                // setMovieCurrent(null);
                 if (Number.isInteger(absoluteProgress)) {
                   setMovieCurrent(movieList[absoluteProgress]);
                 }
@@ -157,14 +153,14 @@ function MovieCarousel({navigation}: {navigation: any}) {
             </Text>
 
             <TouchableOpacity
-              style={styles.orderBtn}
+              style={styles.btnOrder}
               onPress={() =>
                 navigation.navigate('MovieTheater', {
                   movie: movieCurrent,
                 })
               }>
               <Ionicons name="ticket" size={20} color="#ffffff" />
-              <Text style={styles.text}> Đặt vé</Text>
+              <Text style={styles.textOrder}> Đặt vé</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -192,14 +188,14 @@ function MovieCarousel({navigation}: {navigation: any}) {
             </Text>
 
             <TouchableOpacity
-              style={styles.orderBtn}
+              style={styles.btnOrder}
               onPress={() =>
                 navigation.navigate('MovieTheater', {
                   movie: movieList[0],
                 })
               }>
               <Ionicons name="ticket" size={20} color="#ffffff" />
-              <Text style={styles.text}> Đặt vé</Text>
+              <Text style={styles.textOrder}> Đặt vé</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -210,34 +206,35 @@ function MovieCarousel({navigation}: {navigation: any}) {
 
 const styles = StyleSheet.create({
   //filter
-  containerBtn: {
+  containerCate: {
     alignItems: 'center',
     marginTop: 15,
     height: '10%',
-    paddingHorizontal: 15,
+    paddingHorizontal: 5,
   },
-  boxBtn: {
+  boxCate: {
     width: 100,
-    height: 100,
-    marginRight: 5,
-  },
-  buttonActive: {
+    height: 50,
     backgroundColor: '#3f3f3f90',
-    borderWidth: 1,
-    borderColor: '#77777785',
+    paddingVertical: 5,
+    paddingHorizontal: 3,
   },
-  button: {
-    backgroundColor: '#838282b9',
+  btnActive: {
+    backgroundColor: '#666666b8',
+    borderWidth: 1,
+  },
+  btnCate: {
     alignItems: 'center',
     paddingVertical: 10,
     cursor: 'pointer',
     width: '100%',
+    height: 40,
     borderRadius: 5,
   },
-  text: {
+  textCate: {
     color: 'white',
     fontSize: 15,
-    fontWeight: '500',
+    fontWeight: '400',
     textAlign: 'center',
   },
   //carousel
@@ -276,7 +273,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   // order button
-  orderBtn: {
+  btnOrder: {
     backgroundColor: '#52f52ac0',
     width: '50%',
     flexDirection: 'row',
@@ -285,6 +282,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     gap: 10,
     borderRadius: 5,
+  },
+  textOrder: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: '400',
+    textAlign: 'center',
   },
 });
 

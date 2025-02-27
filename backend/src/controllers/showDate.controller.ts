@@ -8,8 +8,8 @@ import { FilterShowDateDTO } from '../dto/showDate.dto';
 export class ShowDateController {
   constructor(private readonly showDateService: ShowDateService) {}
 
-  @Post()
-  filterList(@Body() parameter: FilterShowDateDTO) {
-    return this.showDateService.filterList(parameter);
+  @Post('/dateByMovie')
+  filterDateByMovie(@Body() parameter: FilterShowDateDTO) {
+    return this.showDateService.filterDateByMovie(parameter);
   }
 }
